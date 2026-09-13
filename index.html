@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flappy Kiro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="game-wrapper">
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+  <!-- Score counter shown while playing -->
+  <div id="score-display">0</div>
+
+  <div id="ui-overlay">
+
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen active">
+      <div class="ghost-preview">👻</div>
+      <h1>Flappy Kiro</h1>
+      <div class="subtitle">feat. Ghosty</div>
+      <div class="start-hint">Press SPACE to start</div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="gameover-screen" class="screen" style="display:none;">
+      <h2>💀 Oops!</h2>
+      <div class="score-label">SCORE</div>
+      <div class="score-value" id="final-score">0</div>
+      <div class="best-label">BEST</div>
+      <div class="best-value" id="best-score">0</div>
+
+      <!-- H: Initials entry (shown only when score earns a leaderboard spot) -->
+      <div id="initials-section">
+        <div id="initials-label">🏆 NEW HIGH ENTRY! YOUR INITIALS:</div>
+        <div id="initials-row">
+          <input id="initials-input" type="text" maxlength="3" placeholder="AAA"
+                 autocomplete="off" spellcheck="false" />
+          <button id="initials-submit">OK</button>
+        </div>
+      </div>
+
+      <!-- H: Leaderboard (shown after initials submitted, or if score didn't qualify) -->
+      <div id="leaderboard-section">
+        <div id="leaderboard-title">TOP 10</div>
+        <ul id="leaderboard-list"></ul>
+      </div>
+
+      <div class="retry-hint" id="retry-hint" style="display:none;">Press SPACE to retry</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Game logic (A: persistence, B: difficulty, H: leaderboard) -->
+<script src="game.js"></script>
+
+<!-- Unit tests — outputs to browser console on page load -->
+<script src="game.test.js"></script>
+
+</body>
+</html>

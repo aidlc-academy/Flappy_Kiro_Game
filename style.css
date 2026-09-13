@@ -1,0 +1,283 @@
+/* ─── Reset ───────────────────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Layout ──────────────────────────────────────────────────────────────── */
+body {
+  background: #1a0a2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#game-wrapper {
+  position: relative;
+  width: 400px;
+  height: 600px;
+}
+
+canvas {
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(180, 120, 255, 0.5), 0 0 80px rgba(100, 60, 180, 0.3);
+}
+
+#ui-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Screens ─────────────────────────────────────────────────────────────── */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Start screen ────────────────────────────────────────────────────────── */
+h1 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(200, 160, 255, 0.9), 0 0 40px rgba(150, 100, 255, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #c4a0ff;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+
+.ghost-preview {
+  font-size: 3.5rem;
+  margin-bottom: 18px;
+  animation: float 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(200, 160, 255, 0.9));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.start-hint {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(200, 160, 255, 0.4);
+  border-radius: 24px;
+  padding: 10px 28px;
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  backdrop-filter: blur(4px);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+/* ─── Score display (shown while playing) ─────────────────────────────────── */
+#score-display {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(200, 160, 255, 0.8);
+  pointer-events: none;
+  display: none;
+}
+
+/* ─── Game Over screen ────────────────────────────────────────────────────── */
+#gameover-screen {
+  background: rgba(20, 5, 40, 0.80);
+  border: 1px solid rgba(200, 160, 255, 0.3);
+  border-radius: 20px;
+  padding: 24px 36px;
+  backdrop-filter: blur(8px);
+  width: 320px;
+  pointer-events: auto; /* allow initials input clicks */
+}
+
+#gameover-screen h2 {
+  font-size: 2rem;
+  color: #ff80b3;
+  text-shadow: 0 0 16px rgba(255, 100, 160, 0.7);
+  margin-bottom: 8px;
+}
+
+.score-label {
+  font-size: 0.85rem;
+  color: #c4a0ff;
+  margin-top: 14px;
+  letter-spacing: 1px;
+}
+
+.score-value {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.best-label {
+  font-size: 0.75rem;
+  color: #a080e0;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+.best-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e0c0ff;
+}
+
+/* ─── Initials entry ──────────────────────────────────────────────────────── */
+#initials-section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px;
+}
+
+#initials-section.visible {
+  display: flex;
+}
+
+#initials-label {
+  font-size: 0.8rem;
+  color: #ffd080;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+#initials-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#initials-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(200, 160, 255, 0.6);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+  padding: 6px 8px;
+  outline: none;
+}
+
+#initials-input:focus {
+  border-color: #c4a0ff;
+  box-shadow: 0 0 8px rgba(200, 160, 255, 0.5);
+}
+
+#initials-submit {
+  background: rgba(180, 120, 255, 0.3);
+  border: 1px solid rgba(200, 160, 255, 0.6);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#initials-submit:hover {
+  background: rgba(180, 120, 255, 0.55);
+}
+
+/* ─── Leaderboard ─────────────────────────────────────────────────────────── */
+#leaderboard-section {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 14px;
+  width: 100%;
+}
+
+#leaderboard-section.visible {
+  display: flex;
+}
+
+#leaderboard-title {
+  font-size: 0.72rem;
+  color: #a080e0;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+#leaderboard-list {
+  list-style: none;
+  width: 100%;
+}
+
+#leaderboard-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: #d0b0ff;
+}
+
+#leaderboard-list li.highlight {
+  background: rgba(200, 160, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+#leaderboard-list .lb-rank  { width: 20px; color: #8060c0; }
+#leaderboard-list .lb-name  { flex: 1; text-align: left; padding-left: 6px; letter-spacing: 1px; }
+#leaderboard-list .lb-score { text-align: right; font-weight: 700; }
+
+/* ─── Retry hint ──────────────────────────────────────────────────────────── */
+.retry-hint {
+  margin-top: 16px;
+  background: rgba(180, 120, 255, 0.2);
+  border: 1px solid rgba(200, 160, 255, 0.5);
+  border-radius: 24px;
+  padding: 9px 26px;
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
